@@ -1,6 +1,6 @@
 Future addons and my current decision
 
-1 currently on deleting a ticket , i delete all its logs too 
+1 currently on deleting a ticket , i dont delete all its logs 
 
 2 Function i would like to add  
    temporary change in role
