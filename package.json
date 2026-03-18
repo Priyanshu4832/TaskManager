@@ -1,0 +1,25 @@
+{
+  "name": "task_management",
+  "version": "1.0.0",
+  "description": "task management api",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js ",
+    "server": "node --watch --env-file=.env server.js"
+  },
+  "author": "priyanshu",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcryptjs": "^3.0.3",
+    "colors": "^1.4.0",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.2.4",
+    "prisma": "^5.22.0",
+    "redis": "^5.11.0"
+  }
+}

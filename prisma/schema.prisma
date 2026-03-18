@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  DEVELOPER
+  VIEWER
+}
+
+enum TicketStatus {
+  BACKLOG
+  TODO
+  IN_PROGRESS
+  REVIEW
+  DONE
+}
+
+model User {
+  id              String        @id @default(uuid())
+  name            String
+  email           String        @unique
+  password        String
+  role            Role          @default(DEVELOPER)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  boards          Board[]
+  activityLogs    ActivityLog[]
+  assignedTickets Ticket[]      @relation("AssignedTickets")
+  createdTickets  Ticket[]      @relation("CreatedTickets")
+}
+
+model Board {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  ownerId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  owner       User          @relation(fields: [ownerId], references: [id])
+  tickets     Ticket[]
+  activityLogs ActivityLog[] 
+}
+
+model Ticket {
+  id          String       @id @default(uuid())
+  title       String
+  description String?
+  status      TicketStatus @default(BACKLOG)
+  boardId     String
+  assigneeId  String?
+  createdById String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  board        Board         @relation(fields: [boardId], references: [id])
+  assignee     User?         @relation("AssignedTickets", fields: [assigneeId], references: [id])
+  createdBy    User          @relation("CreatedTickets", fields: [createdById], references: [id])
+  activityLogs ActivityLog[] 
+}
+
+model ActivityLog {
+  id        String   @id @default(uuid())
+  
+  
+  ticketId  String?
+  boardId   String?
+  userId    String   
+  
+  action    String
+  details   String
+  createdAt DateTime @default(now())
+
+  // onDelete: SetNull is what keeps the log even if the ticket/board is deleted
+  ticket    Ticket?  @relation(fields: [ticketId], references: [id], onDelete: SetNull)
+  board     Board?   @relation(fields: [boardId], references: [id], onDelete: SetNull)
+  user      User     @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
