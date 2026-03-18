@@ -1,19 +1,7 @@
+Future addons and my current decision
 
-1? currently on deleting a ticket , i delete all its logs too 
+1 currently on deleting a ticket , i delete all its logs too 
 
-2? these functions are missing in tickets  
-   ✅Three missing here worth thinking about:
+2 Function i would like to add  
+   temporary change in role
 
-    Get all tickets for a board — without this, how does a user see what's on their board?
-    Get single ticket — needed to view full ticket details
-    Update ticket — editing title, description. Separate from status update because status has the state machine logic
-    Assign ticket — you have assigneeId in your schema but no way to set it yet
-
-    Update board is missing. Users need to be able to rename a board or change its description.
-
-
-
-3? internally its left who deleted or updates things
-
-
-4? theres no function to assign role
